@@ -3,13 +3,17 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "predev": "docker compose up -d --wait && pnpm --filter api db:migrate",
+    "dev": "turbo run dev worker",
+    "db:migrate": "pnpm --filter api db:migrate",
+    "db:seed": "pnpm --filter api db:seed",
+    "db:auth-generate": "pnpm dlx auth@latest generate --yes --adapter drizzle --dialect postgresql --config apps/api/src/lib/auth.ts --output apps/api/src/modules/auth/model/generated.ts",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "format": "turbo run format",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "prettier": "3.9.6",
     "turbo": "^2.11.10",
     "typescript": "7.0.2"
   },
