@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "bin": {
-    "create-indiefast": "./bin.js"
+    "create-indiefast": "bin.js"
   },
   "files": ["bin.js"],
   "engines": {
