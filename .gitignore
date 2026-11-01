@@ -41,7 +41,15 @@ yarn-error.log*
 # Cursor
 .cursor
 graphify-out
-docs
+docs/*
+!docs/engineering/
+docs/engineering/*
+!docs/engineering/load-report.md
+!docs/engineering/load-report/
+docs/engineering/load-report/*
+!docs/engineering/load-report/raw/
+docs/engineering/load-report/raw/*
+!docs/engineering/load-report/raw/*.json
 .superpowers
 docker/minio_data
 docker/pgadmin_data

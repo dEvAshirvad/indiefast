@@ -1,0 +1,248 @@
+{
+  "sha": "849ba18",
+  "node": "v25.9.0",
+  "cpus": 8,
+  "cpuModel": "Apple M2",
+  "single": {
+    "workers": 1,
+    "echo": {
+      "10": {
+        "p50": 15,
+        "p99": 17,
+        "requestsPerSec": 516.8,
+        "total": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 10
+        }
+      },
+      "25": {
+        "p50": 7,
+        "p99": 8,
+        "requestsPerSec": 2537.2,
+        "total": 25,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 25
+        }
+      },
+      "50": {
+        "p50": 20,
+        "p99": 29,
+        "requestsPerSec": 1581.9,
+        "total": 50,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 50
+        }
+      }
+    },
+    "email": {
+      "shot": {
+        "p50": 51,
+        "p99": 55,
+        "requestsPerSec": 357.7,
+        "total": 20,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "201": 20
+        }
+      },
+      "accepted": 20,
+      "mailhog": 20,
+      "drainMs": 311
+    },
+    "limiter": {
+      "p50": 1,
+      "p99": 2,
+      "requestsPerSec": 968.9,
+      "total": 70,
+      "errors": 0,
+      "timeouts": 0,
+      "non2xx": 10,
+      "status": {
+        "200": 60,
+        "429": 10
+      }
+    },
+    "pool": {
+      "shot": {
+        "p50": 86,
+        "p99": 92,
+        "requestsPerSec": 531.8,
+        "total": 50,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "201": 50
+        }
+      },
+      "rows": 50
+    },
+    "stampede": {
+      "shot": {
+        "p50": 20,
+        "p99": 21,
+        "requestsPerSec": 917.4,
+        "total": 20,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "201": 20
+        }
+      },
+      "rows": 20
+    },
+    "health": {
+      "p50": 2,
+      "p99": 5,
+      "requestsPerSec": 19927.64,
+      "total": 219206,
+      "errors": 0,
+      "timeouts": 0,
+      "non2xx": 0,
+      "status": {
+        "200": 219206
+      }
+    }
+  },
+  "cluster": {
+    "workers": 8,
+    "echo": {
+      "10": {
+        "p50": 73,
+        "p99": 117,
+        "requestsPerSec": 82.3,
+        "total": 10,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 10
+        }
+      },
+      "25": {
+        "p50": 14,
+        "p99": 21,
+        "requestsPerSec": 1026.1,
+        "total": 25,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 25
+        }
+      },
+      "50": {
+        "p50": 11,
+        "p99": 27,
+        "requestsPerSec": 1765.1,
+        "total": 50,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 50
+        }
+      }
+    },
+    "email": {
+      "shot": {
+        "p50": 131,
+        "p99": 152,
+        "requestsPerSec": 130.8,
+        "total": 20,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "201": 20
+        }
+      },
+      "accepted": 20,
+      "mailhog": 20,
+      "drainMs": 413
+    },
+    "limiter": {
+      "p50": 1,
+      "p99": 4,
+      "requestsPerSec": 1013.8,
+      "total": 70,
+      "errors": 0,
+      "timeouts": 0,
+      "non2xx": 10,
+      "status": {
+        "200": 60,
+        "429": 10
+      }
+    },
+    "pool": {
+      "shot": {
+        "p50": 106,
+        "p99": 129,
+        "requestsPerSec": 383.7,
+        "total": 50,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "201": 50
+        }
+      },
+      "rows": 50
+    },
+    "stampede": {
+      "shot": {
+        "p50": 24,
+        "p99": 27,
+        "requestsPerSec": 723.4,
+        "total": 20,
+        "errors": 0,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "201": 20
+        }
+      },
+      "rows": 20
+    },
+    "health": {
+      "p50": 2,
+      "p99": 17,
+      "requestsPerSec": 13527.2,
+      "total": 135268,
+      "errors": 0,
+      "timeouts": 0,
+      "non2xx": 0,
+      "status": {
+        "200": 135268
+      }
+    },
+    "shutdown": {
+      "drainMs": 7176,
+      "exitCode": 0,
+      "shot": {
+        "p50": 2,
+        "p99": 14,
+        "requestsPerSec": 12195.2,
+        "total": 121948,
+        "errors": 37113,
+        "timeouts": 0,
+        "non2xx": 0,
+        "status": {
+          "200": 121948
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,17 @@
-import { cp, mkdir, writeFile } from "node:fs/promises";
-import { dirname, join, relative, resolve } from "node:path";
+#!/usr/bin/env node
+import { execFile } from "node:child_process";
+import { createWriteStream } from "node:fs";
+import { cp, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, relative, resolve } from "node:path";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
+
+const execFileAsync = promisify(execFile);
+const templateArchive =
+  "https://github.com/dEvAshirvad/indiefast/archive/refs/heads/main.tar.gz";
 
 const skipped = [
   "node_modules",
@@ -58,7 +69,25 @@ export async function copyTemplate(source, target) {
   await writeFile(join(publicDir, "logo-mark.svg"), mark);
 }
 
-const isDirect = process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1]);
+async function scaffoldFromGitHub(target) {
+  const dir = await mkdtemp(join(tmpdir(), "indiefast-"));
+  try {
+    const archive = join(dir, "repo.tar.gz");
+    const response = await fetch(templateArchive);
+    if (!response.ok || !response.body) {
+      throw new Error(`template download failed: ${response.status}`);
+    }
+    await pipeline(Readable.fromWeb(response.body), createWriteStream(archive));
+    await execFileAsync("tar", ["-xzf", archive, "-C", dir]);
+    await copyTemplate(join(dir, "indiefast-main"), target);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+}
+
+const isDirect =
+  process.argv[1] &&
+  fileURLToPath(import.meta.url) === resolve(process.argv[1]);
 
 if (isDirect && process.argv.includes("--self-check")) {
   const assert = (await import("node:assert")).default;
@@ -77,7 +106,6 @@ if (isDirect && !process.argv.includes("--self-check")) {
     console.error("usage: create-indiefast <directory>");
     process.exit(1);
   }
-  const source = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-  await copyTemplate(source, resolve(targetName));
+  await scaffoldFromGitHub(resolve(targetName));
   console.log(`copied IndieFast to ${targetName}`);
 }
