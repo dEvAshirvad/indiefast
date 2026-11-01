@@ -65,6 +65,13 @@ const envSchema = z
     GOOGLE_CLIENT_SECRET: z.string().optional(),
     GITHUB_CLIENT_ID: z.string().optional(),
     GITHUB_CLIENT_SECRET: z.string().optional(),
+    CLUSTER_WORKERS: z
+      .string()
+      .optional()
+      .transform((value) => blankToUndefined(value))
+      .refine((value) => value === undefined || /^[1-9]\d*$/.test(value), {
+        message: "must be an integer >= 1",
+      }),
   })
   .transform((value) => ({
     nodeEnv: value.NODE_ENV,
@@ -106,6 +113,7 @@ const envSchema = z
     googleClientSecret: value.GOOGLE_CLIENT_SECRET,
     githubClientId: value.GITHUB_CLIENT_ID,
     githubClientSecret: value.GITHUB_CLIENT_SECRET,
+    clusterWorkers: value.CLUSTER_WORKERS,
   }));
 
 export type Env = z.infer<typeof envSchema>;

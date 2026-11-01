@@ -57,6 +57,7 @@ const parts = {
   googleClientSecret: undefined,
   githubClientId: undefined,
   githubClientSecret: undefined,
+  clusterWorkers: undefined,
 };
 
 describe("loadEnv", () => {
@@ -104,6 +105,18 @@ describe("loadEnv", () => {
     expect(resolveEmailApiEnabled("test", undefined)).toBe(false);
     expect(resolveEmailApiEnabled("development", "false")).toBe(false);
     expect(resolveEmailApiEnabled("production", "true")).toBe(true);
+  });
+
+  test("reads an explicit worker count and rejects zero", () => {
+    expect(loadEnv({ ...valid, CLUSTER_WORKERS: "6" }).clusterWorkers).toBe(
+      "6",
+    );
+    expect(loadEnv({ ...valid, CLUSTER_WORKERS: "  " }).clusterWorkers).toBe(
+      undefined,
+    );
+    expect(() => loadEnv({ ...valid, CLUSTER_WORKERS: "0" })).toThrow(
+      /CLUSTER_WORKERS/,
+    );
   });
 
   test("crashes when the redis host is missing", () => {

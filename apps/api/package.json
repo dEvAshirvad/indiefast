@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "load": "tsx scripts/load.ts",
     "worker": "tsx watch src/worker.ts",
     "lint": "biome check .",
     "format": "biome check --write .",
@@ -48,6 +49,7 @@
     "@types/nodemailer": "^8.0.2",
     "@types/pg": "^8.23.1",
     "@types/supertest": "^7.2.1",
+    "autocannon": "^8.0.0",
     "supertest": "^7.3.1",
     "tsx": "^4.23.15",
     "typescript": "7.0.2",

@@ -42,3 +42,9 @@ yarn-error.log*
 .cursor
 graphify-out
 docs
+.superpowers
+docker/minio_data
+docker/pgadmin_data
+docker/postgres_data
+docker/redis_data   
+docker/redisinsight_data

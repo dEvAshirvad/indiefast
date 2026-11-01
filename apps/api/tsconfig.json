@@ -18,7 +18,8 @@
     "src/**/*.ts",
     "src/**/*.json",
     "src/**/*.d.ts",
-    "scripts/**/*.ts"
+    "scripts/**/*.ts",
+    "scripts/**/*.d.ts"
   ],
   "files": ["./src/types/express.d.ts"],
   "exclude": [
