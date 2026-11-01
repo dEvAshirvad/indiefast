@@ -1,13 +1,25 @@
 {
   "name": "create-indiefast",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dEvAshirvad/indiefast.git",
+    "directory": "packages/create-indiefast"
+  },
+  "homepage": "https://github.com/dEvAshirvad/indiefast#readme",
+  "bugs": {
+    "url": "https://github.com/dEvAshirvad/indiefast/issues"
+  },
   "bin": {
     "create-indiefast": "bin.js"
   },
   "files": ["bin.js"],
   "engines": {
     "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
