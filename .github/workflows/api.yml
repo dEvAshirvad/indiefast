@@ -7,41 +7,35 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: indiefast
-          POSTGRES_PASSWORD: indiefast
-          POSTGRES_DB: indiefast
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U indiefast -d indiefast"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-      redis:
-        image: redis:7
-        command: redis-server --requirepass indiefast --stop-writes-on-bgsave-error no
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli -a indiefast ping"
-          --health-interval 5s
-          --health-timeout 3s
-          --health-retries 10
-      minio:
-        image: quay.io/minio/minio
-        command: server /data
-        env:
-          MINIO_ROOT_USER: indiefast
-          MINIO_ROOT_PASSWORD: indiefastindiefast
-          MINIO_API_CORS_ALLOW_ORIGIN: http://localhost:3000
-        ports:
-          - 9000:9000
     steps:
       - uses: actions/checkout@v4
+      - name: Start Postgres, Redis, and MinIO
+        run: |
+          docker pull postgres:16
+          docker pull redis:7
+          docker pull quay.io/minio/minio
+          docker run -d --name indiefast-postgres -p 5432:5432 \
+            -e POSTGRES_USER=indiefast \
+            -e POSTGRES_PASSWORD=indiefast \
+            -e POSTGRES_DB=indiefast \
+            postgres:16
+          docker run -d --name indiefast-redis -p 6379:6379 \
+            redis:7 redis-server --requirepass indiefast --stop-writes-on-bgsave-error no
+          docker run -d --name indiefast-minio -p 9000:9000 \
+            -e MINIO_ROOT_USER=indiefast \
+            -e MINIO_ROOT_PASSWORD=indiefastindiefast \
+            -e MINIO_API_CORS_ALLOW_ORIGIN=http://localhost:3000 \
+            quay.io/minio/minio server /data
+          for _ in $(seq 1 30); do
+            docker exec indiefast-postgres pg_isready -U indiefast -d indiefast && break
+            sleep 1
+          done
+          docker exec indiefast-redis redis-cli -a indiefast ping
+          for _ in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:9000/minio/health/live && exit 0
+            sleep 1
+          done
+          exit 1
       - uses: pnpm/action-setup@v4
         with:
           version: 11.25.0
@@ -51,13 +45,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: cp .env.example .env
-      - name: Wait for MinIO
-        run: |
-          for _ in $(seq 1 30); do
-            curl -fsS http://127.0.0.1:9000/minio/health/live && exit 0
-            sleep 1
-          done
-          exit 1
       - run: pnpm --filter api db:migrate
       - run: pnpm --filter api test
       - run: pnpm --filter api lint
