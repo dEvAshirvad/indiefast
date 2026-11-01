@@ -10,7 +10,7 @@ Lesson 08 cannot ping a database that is not a known URL. This lesson is the dat
 |---|---|---|
 | Postgres | `postgres:16` | 5432 |
 | Redis | `redis:7` | 6379 |
-| MinIO API | `minio/minio` | 9000 |
+| MinIO API | `pgsty/silo` | 9000 |
 | MinIO console | same | 9001 |
 | Mailhog SMTP | `mailhog/mailhog` | 1025 |
 | Mailhog UI | same | 8025 |
